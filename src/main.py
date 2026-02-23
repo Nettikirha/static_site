@@ -2,14 +2,11 @@
 
 import os
 import shutil
-from textnode import TextNode, TextType
 
-# Resolve paths relative to this file (src/main.py), go up one level to project root
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 def copy_static(src, dst):
-    # On the initial call, clear the destination directory
     if os.path.exists(dst):
         shutil.rmtree(dst)
     os.mkdir(dst)
@@ -26,9 +23,17 @@ def copy_static(src, dst):
 
 
 def main():
+    from generate_page import generate_page
+
     static_dir = os.path.join(PROJECT_ROOT, "static")
     public_dir = os.path.join(PROJECT_ROOT, "public")
     copy_static(static_dir, public_dir)
+
+    generate_page(
+        os.path.join(PROJECT_ROOT, "content", "index.md"),
+        os.path.join(PROJECT_ROOT, "template.html"),
+        os.path.join(PROJECT_ROOT, "public", "index.html"),
+    )
 
 
 if __name__ == "__main__":
