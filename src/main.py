@@ -23,16 +23,16 @@ def copy_static(src, dst):
 
 
 def main():
-    from generate_page import generate_page
+    from generate_page import generate_pages_recursive
 
     static_dir = os.path.join(PROJECT_ROOT, "static")
     public_dir = os.path.join(PROJECT_ROOT, "public")
     copy_static(static_dir, public_dir)
 
-    generate_page(
-        os.path.join(PROJECT_ROOT, "content", "index.md"),
+    generate_pages_recursive(
+        os.path.join(PROJECT_ROOT, "content"),
         os.path.join(PROJECT_ROOT, "template.html"),
-        os.path.join(PROJECT_ROOT, "public", "index.html"),
+        public_dir,
     )
 
 
