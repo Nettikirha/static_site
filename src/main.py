@@ -1,6 +1,7 @@
 # src/main.py
 
 import os
+import sys
 import shutil
 
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -25,14 +26,20 @@ def copy_static(src, dst):
 def main():
     from generate_page import generate_pages_recursive
 
+    # Get basepath from CLI argument, default to "/"
+    basepath = "/"
+    if len(sys.argv) > 1:
+        basepath = sys.argv[1]
+
     static_dir = os.path.join(PROJECT_ROOT, "static")
-    public_dir = os.path.join(PROJECT_ROOT, "public")
-    copy_static(static_dir, public_dir)
+    docs_dir = os.path.join(PROJECT_ROOT, "docs")
+    copy_static(static_dir, docs_dir)
 
     generate_pages_recursive(
         os.path.join(PROJECT_ROOT, "content"),
         os.path.join(PROJECT_ROOT, "template.html"),
-        public_dir,
+        docs_dir,
+        basepath,
     )
 
 
